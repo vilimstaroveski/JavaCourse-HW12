@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd-cpd>
+   <duplication lines="26" tokens="140">
+      <file line="38"
+            path="C:\Users\Vili\workspaceZaJavaTecaj\jvdraw\src\main\java\hr\fer\zemris\java\hw12\jvdraw\actions\SaveAction.java"/>
+      <file line="36"
+            path="C:\Users\Vili\workspaceZaJavaTecaj\jvdraw\src\main\java\hr\fer\zemris\java\hw12\jvdraw\actions\SaveAsAction.java"/>
+      <codefragment><![CDATA[		if(parent.getPathToCurrentFile() == null) {
+			
+			JFileChooser fc = new JFileChooser();
+			fc.setDialogTitle("Save document"); 
+			if(fc.showSaveDialog(parent) != JFileChooser.APPROVE_OPTION) {
+				JOptionPane.showMessageDialog(parent, 
+						"Nothing has been saved!", 
+						"System messege", 
+						JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+			Path file = fc.getSelectedFile().toPath();
+			if(!file.toString().endsWith("jvd")) {
+				file = Paths.get(file.toString()+".jvd");
+			}
+			if(Files.exists(file)) {
+				int r = JOptionPane.showConfirmDialog(parent, 
+						"File "+file+" already exist. Do you want to overwrite it?", 
+						"Warning", 
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE);
+				if(r != JOptionPane.YES_OPTION) {
+					return;
+				}
+			}
+			parent.setPathToCurrentFile(file);]]></codefragment>
+   </duplication>
+   <duplication lines="19" tokens="104">
+      <file line="65"
+            path="C:\Users\Vili\workspaceZaJavaTecaj\jvdraw\src\main\java\hr\fer\zemris\java\hw12\jvdraw\actions\SaveAction.java"/>
+      <file line="63"
+            path="C:\Users\Vili\workspaceZaJavaTecaj\jvdraw\src\main\java\hr\fer\zemris\java\hw12\jvdraw\actions\SaveAsAction.java"/>
+      <codefragment><![CDATA[		String modelText = "";
+		for(int i = 0; i < parent.getDrawingModel().getSize(); i++) {
+			GeometricalObject object = parent.getDrawingModel().getObject(i);
+			modelText += object.toString()+"\r\n";
+		}
+		
+		try {
+			Files.write(parent.getPathToCurrentFile(), modelText.getBytes(StandardCharsets.UTF_8));
+		} catch (IOException e1) {
+			JOptionPane.showMessageDialog(parent, 
+					e1.getMessage(),
+					"Error", 
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		parent.setModified(false);
+	}
+
+}]]></codefragment>
+   </duplication>
+</pmd-cpd>

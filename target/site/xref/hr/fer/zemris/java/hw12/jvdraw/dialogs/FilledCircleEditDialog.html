@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>FilledCircleEditDialog xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../../../../apidocs/hr/fer/zemris/java/hw12/jvdraw/dialogs/FilledCircleEditDialog.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> hr.fer.zemris.java.hw12.jvdraw.dialogs;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.colorarea.JColorArea;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.objects.FilledCircle;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">import</strong> java.awt.GridLayout;
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <strong class="jxr_keyword">import</strong> javax.swing.JLabel;
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <strong class="jxr_keyword">import</strong> javax.swing.JPanel;
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <strong class="jxr_keyword">import</strong> javax.swing.JTextField;
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_javadoccomment"> * Edit dialog for editing filled circle. It can edit filled circles </em>
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment"> * center point, radius, outline color and inside color.</em>
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_javadoccomment"> * @author Vilim StaroveÅ¡ki</em>
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../../hr/fer/zemris/java/hw12/jvdraw/dialogs/FilledCircleEditDialog.html">FilledCircleEditDialog</a> <strong class="jxr_keyword">extends</strong> JPanel{
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  	<em class="jxr_javadoccomment">/**Default serial version UID*/</em>
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = 1L;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  	<em class="jxr_javadoccomment">/**Filled circle to edit*/</em>
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  	<strong class="jxr_keyword">private</strong> <a href="../../../../../../../hr/fer/zemris/java/hw12/jvdraw/objects/FilledCircle.html">FilledCircle</a> fcircle;
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  	<em class="jxr_javadoccomment">/**Area for definig center point's x coordinate*/</em>
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  	<strong class="jxr_keyword">private</strong> JTextField startX;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  	<em class="jxr_javadoccomment">/**Area for definig center point's y coordinate*/</em>
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  	<strong class="jxr_keyword">private</strong> JTextField startY;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  	<em class="jxr_javadoccomment">/**Area for definig circles radius*/</em>
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  	<strong class="jxr_keyword">private</strong> JTextField radius;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  	<em class="jxr_javadoccomment">/**Area for definig circles line color*/</em>
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  	<strong class="jxr_keyword">private</strong> <a href="../../../../../../../hr/fer/zemris/java/hw12/jvdraw/colorarea/JColorArea.html">JColorArea</a> outlineColors;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  	<em class="jxr_javadoccomment">/**Area for definig circles inside color*/</em>
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  	<strong class="jxr_keyword">private</strong> <a href="../../../../../../../hr/fer/zemris/java/hw12/jvdraw/colorarea/JColorArea.html">JColorArea</a> insideColors;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  	
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <em class="jxr_javadoccomment">	 * Creates new {@link CircleEditDialog}</em>
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <em class="jxr_javadoccomment">	 * @param fcircle circle that will be redefined</em>
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  	<strong class="jxr_keyword">public</strong> <a href="../../../../../../../hr/fer/zemris/java/hw12/jvdraw/dialogs/FilledCircleEditDialog.html">FilledCircleEditDialog</a>(<a href="../../../../../../../hr/fer/zemris/java/hw12/jvdraw/objects/FilledCircle.html">FilledCircle</a> fcircle) {
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  		<strong class="jxr_keyword">this</strong>.fcircle = fcircle;
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  		initDialog();
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  		
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  	}
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment">	 * Initializes dialogs GUI.</em>
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> initDialog() {
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>  		setLayout(<strong class="jxr_keyword">new</strong> GridLayout(5, 2));
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  		<em class="jxr_comment">//row 1</em>
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  		add(<strong class="jxr_keyword">new</strong> JLabel(<span class="jxr_string">"Center point X:"</span>));
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>  		startX = <strong class="jxr_keyword">new</strong> JTextField(Integer.toString(fcircle.getStartPointX()));
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>  		add(startX);
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>  		<em class="jxr_comment">//row 2</em>
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>  		add(<strong class="jxr_keyword">new</strong> JLabel(<span class="jxr_string">"Center point Y:"</span>));
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>  		startY = <strong class="jxr_keyword">new</strong> JTextField(Integer.toString(fcircle.getStartPointY()));
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>  		add(startY);
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>  		<em class="jxr_comment">//row 3 </em>
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>  		add(<strong class="jxr_keyword">new</strong> JLabel(<span class="jxr_string">"Radius:"</span>));
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>  		radius = <strong class="jxr_keyword">new</strong> JTextField(Integer.toString(fcircle.getRadius()));
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>  		add(radius);
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>  		<em class="jxr_comment">//row 4</em>
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>  		add(<strong class="jxr_keyword">new</strong> JLabel(<span class="jxr_string">"Outline color"</span>));
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>  		outlineColors = <strong class="jxr_keyword">new</strong> <a href="../../../../../../../hr/fer/zemris/java/hw12/jvdraw/colorarea/JColorArea.html">JColorArea</a>(fcircle.getOutline());
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>  		add(outlineColors);
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>  		<em class="jxr_comment">//row 5</em>
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>  		add(<strong class="jxr_keyword">new</strong> JLabel(<span class="jxr_string">"Inside color"</span>));
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>  		insideColors = <strong class="jxr_keyword">new</strong> <a href="../../../../../../../hr/fer/zemris/java/hw12/jvdraw/colorarea/JColorArea.html">JColorArea</a>(fcircle.getInside());
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>  		add(insideColors);
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>  		
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  	}
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>  	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>  <em class="jxr_javadoccomment">	 * Performes all defined changes on circle.</em>
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>  	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> updateObject() {
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>  		fcircle.setStartPoint(Integer.parseInt(startX.getText()), Integer.parseInt(startY.getText()));
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>  		fcircle.setEndPoint(Integer.parseInt(startX.getText())+Integer.parseInt(radius.getText()), Integer.parseInt(startY.getText()));
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>  		fcircle.setOutline(outlineColors.getCurrentColor());
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>  		fcircle.setInsideColor(insideColors.getCurrentColor());
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>  	}
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>  }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2015 <a href="http://www.fer.unizg.hr">ZEMRIS, Fakultet elektrotehnike i računarstva, Sveučilište u Zagrebu</a>. All rights reserved.</div>
+</body>
+</html>

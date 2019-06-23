@@ -1,0 +1,445 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>JVDraw xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../../../apidocs/hr/fer/zemris/java/hw12/jvdraw/JVDraw.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> hr.fer.zemris.java.hw12.jvdraw;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.actions.DrawCircleAction;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.actions.DrawFCircleAction;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.actions.DrawLineAction;
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.actions.ExitAction;
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.actions.ExportAction;
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.actions.OpenAction;
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.actions.SaveAction;
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.actions.SaveAsAction;
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.colorarea.JColorArea;
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.dialogs.CircleEditDialog;
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.dialogs.FilledCircleEditDialog;
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.dialogs.LineEditDialog;
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.list.DrawingModel;
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.list.DrawingObjectListModel;
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.list.ObjectsModel;
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.objects.Circle;
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.objects.FilledCircle;
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.objects.GeometricalObject;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> hr.fer.zemris.java.hw12.jvdraw.objects.Line;
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> java.awt.BorderLayout;
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> java.awt.Color;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> java.awt.event.KeyEvent;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> java.awt.event.MouseAdapter;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> java.awt.event.MouseEvent;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> java.awt.event.WindowAdapter;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> java.awt.event.WindowEvent;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> java.nio.file.Path;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> javax.swing.AbstractAction;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> javax.swing.Action;
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> javax.swing.BorderFactory;
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> javax.swing.ButtonGroup;
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> javax.swing.ImageIcon;
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> javax.swing.JFrame;
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> javax.swing.JList;
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> javax.swing.JMenu;
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> javax.swing.JMenuBar;
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">import</strong> javax.swing.JOptionPane;
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <strong class="jxr_keyword">import</strong> javax.swing.JToggleButton;
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <strong class="jxr_keyword">import</strong> javax.swing.JToolBar;
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">import</strong> javax.swing.KeyStroke;
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <strong class="jxr_keyword">import</strong> javax.swing.SwingUtilities;
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <strong class="jxr_keyword">import</strong> javax.swing.UIManager;
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  <em class="jxr_javadoccomment"> * Program that allows user to draw lines circles and filled circles </em>
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  <em class="jxr_javadoccomment"> * on white surface. Program supports actions such as Open, Save, Save as and </em>
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>  <em class="jxr_javadoccomment"> * Export. When object is drawn, user can redefine its attributes.</em>
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>  <em class="jxr_javadoccomment"> * @author Vilim StaroveÅ¡ki</em>
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/JVDraw.html">JVDraw</a> <strong class="jxr_keyword">extends</strong> JFrame {
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>  	
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>  	<em class="jxr_javadoccomment">/**Default serial version UID*/</em>
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>  	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = 1L;
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>  	<em class="jxr_javadoccomment">/**Action for opening a .jvd picture in window*/</em>
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>  	<strong class="jxr_keyword">private</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/actions/OpenAction.html">OpenAction</a> openDocument;
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>  	<em class="jxr_javadoccomment">/**Action for saving current picture in .jvd format.*/</em>
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>  	<strong class="jxr_keyword">private</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/actions/SaveAction.html">SaveAction</a> saveDocument;
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>  	<em class="jxr_javadoccomment">/**Action for saving picture as*/</em>
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>  	<strong class="jxr_keyword">private</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/actions/SaveAsAction.html">SaveAsAction</a> saveAsDocument;
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>  	<em class="jxr_javadoccomment">/**Action for exiting the program.*/</em>
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>  	<strong class="jxr_keyword">private</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/actions/ExitAction.html">ExitAction</a> exitProgram;
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>  	<em class="jxr_javadoccomment">/**Action for choosing mode for drawing lines.*/</em>
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>  	<strong class="jxr_keyword">private</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/actions/DrawLineAction.html">DrawLineAction</a> drawLine;
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>  	<em class="jxr_javadoccomment">/**Action for choosing mode for drawing circles.*/</em>
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  	<strong class="jxr_keyword">private</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/actions/DrawCircleAction.html">DrawCircleAction</a> drawCircle;
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>  	<em class="jxr_javadoccomment">/**Action for choosing mode for drawing filled circles.*/</em>
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>  	<strong class="jxr_keyword">private</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/actions/DrawFCircleAction.html">DrawFCircleAction</a> drawFCircle;
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>  	<em class="jxr_javadoccomment">/**Action for exporting current picture in format .jpg, .pgn or .gif*/</em>
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>  	<strong class="jxr_keyword">private</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/actions/ExportAction.html">ExportAction</a> export;
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>  	<em class="jxr_javadoccomment">/**Button group for buttons defining program draw modes.*/</em>
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>  	<strong class="jxr_keyword">private</strong> ButtonGroup drawButtons;
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>  	<em class="jxr_javadoccomment">/**Component on which picture is rendered.*/</em>
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>  	<strong class="jxr_keyword">private</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/JDrawingCanvas.html">JDrawingCanvas</a> canvas;
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>  	<em class="jxr_javadoccomment">/**List of objects that are on the picture*/</em>
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>  	<strong class="jxr_keyword">private</strong> JList&lt;GeometricalObject&gt; listOfObjects;
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>  	<em class="jxr_javadoccomment">/**Model for list containing all objects.*/</em>
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>  	<strong class="jxr_keyword">private</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/list/ObjectsModel.html">ObjectsModel</a> drawingModel;
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>  	<em class="jxr_javadoccomment">/**Foreground color of objects*/</em>
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>  	<strong class="jxr_keyword">private</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/colorarea/JColorArea.html">JColorArea</a> foreground;
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>  	<em class="jxr_javadoccomment">/**Background color of objects.*/</em>
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>  	<strong class="jxr_keyword">private</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/colorarea/JColorArea.html">JColorArea</a> background;
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>  	<em class="jxr_javadoccomment">/**Flag that tells wheater picture has unsaved modifications.*/</em>
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>  	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> modified;
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>  	<em class="jxr_javadoccomment">/**Path where current picture is located.*/</em>
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>  	<strong class="jxr_keyword">private</strong> Path pathToCurrentFile;
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>  	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>  <em class="jxr_javadoccomment">	 * Creates new {@link JVDraw} frame.</em>
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>  <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>  	<strong class="jxr_keyword">public</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/JVDraw.html">JVDraw</a>() {
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>  		
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>  		setTitle(<span class="jxr_string">"JVDraw"</span>);
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>  		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>  		setLocation(200, 200);
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>  		setSize(800, 400);
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>  		modified = false;
+<a class="jxr_linenumber" name="L100" href="#L100">100</a> 		pathToCurrentFile = <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="L101" href="#L101">101</a> 		
+<a class="jxr_linenumber" name="L102" href="#L102">102</a> 		initGUI();
+<a class="jxr_linenumber" name="L103" href="#L103">103</a> 		initListeners();
+<a class="jxr_linenumber" name="L104" href="#L104">104</a> 	}
+<a class="jxr_linenumber" name="L105" href="#L105">105</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L106" href="#L106">106</a> <em class="jxr_javadoccomment">	 * Initializes listeners on program window.</em>
+<a class="jxr_linenumber" name="L107" href="#L107">107</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L108" href="#L108">108</a> 	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> initListeners() {
+<a class="jxr_linenumber" name="L109" href="#L109">109</a> 
+<a class="jxr_linenumber" name="L110" href="#L110">110</a> 		addWindowListener(<strong class="jxr_keyword">new</strong> WindowAdapter() {
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>             @Override
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> windowClosing(<strong class="jxr_keyword">final</strong> WindowEvent e) {
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>             	
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>             	<em class="jxr_comment">//check for modifications</em>
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>             	exitProgram.actionPerformed(<strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="L116" href="#L116">116</a> <em class="jxr_comment">//            	dispose();</em>
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>             }
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>         });
+<a class="jxr_linenumber" name="L119" href="#L119">119</a> 	}
+<a class="jxr_linenumber" name="L120" href="#L120">120</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L121" href="#L121">121</a> <em class="jxr_javadoccomment">	 * Initializes GUI of this program.</em>
+<a class="jxr_linenumber" name="L122" href="#L122">122</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L123" href="#L123">123</a> 	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> initGUI() {
+<a class="jxr_linenumber" name="L124" href="#L124">124</a> 		
+<a class="jxr_linenumber" name="L125" href="#L125">125</a> 		getContentPane().setLayout(<strong class="jxr_keyword">new</strong> BorderLayout());
+<a class="jxr_linenumber" name="L126" href="#L126">126</a> 		
+<a class="jxr_linenumber" name="L127" href="#L127">127</a> 		drawButtons = <strong class="jxr_keyword">new</strong> ButtonGroup();
+<a class="jxr_linenumber" name="L128" href="#L128">128</a> 		
+<a class="jxr_linenumber" name="L129" href="#L129">129</a> 		drawingModel = <strong class="jxr_keyword">new</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/list/ObjectsModel.html">ObjectsModel</a>();
+<a class="jxr_linenumber" name="L130" href="#L130">130</a> 		DrawingObjectListModel objectList = <strong class="jxr_keyword">new</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/list/DrawingObjectListModel.html">DrawingObjectListModel</a>(drawingModel);
+<a class="jxr_linenumber" name="L131" href="#L131">131</a> 		listOfObjects = <strong class="jxr_keyword">new</strong> JList&lt;GeometricalObject&gt;(objectList);
+<a class="jxr_linenumber" name="L132" href="#L132">132</a> 		listOfObjects.setBorder(BorderFactory.createRaisedBevelBorder());
+<a class="jxr_linenumber" name="L133" href="#L133">133</a> 		listOfObjects.setBackground(Color.LIGHT_GRAY);
+<a class="jxr_linenumber" name="L134" href="#L134">134</a> 		drawingModel.addDrawingModelListener(objectList);
+<a class="jxr_linenumber" name="L135" href="#L135">135</a> 		listOfObjects.addMouseListener(<strong class="jxr_keyword">new</strong> MouseAdapter() {
+<a class="jxr_linenumber" name="L136" href="#L136">136</a> 			@Override
+<a class="jxr_linenumber" name="L137" href="#L137">137</a> 			<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> mouseClicked(MouseEvent e) {
+<a class="jxr_linenumber" name="L138" href="#L138">138</a> 				<strong class="jxr_keyword">super</strong>.mouseClicked(e);
+<a class="jxr_linenumber" name="L139" href="#L139">139</a> 				<strong class="jxr_keyword">if</strong>(e.getClickCount() != 2) {
+<a class="jxr_linenumber" name="L140" href="#L140">140</a> 					<strong class="jxr_keyword">return</strong>;
+<a class="jxr_linenumber" name="L141" href="#L141">141</a> 				}
+<a class="jxr_linenumber" name="L142" href="#L142">142</a> 				<strong class="jxr_keyword">int</strong> selectedIndex = listOfObjects.getSelectedIndex();
+<a class="jxr_linenumber" name="L143" href="#L143">143</a> 				
+<a class="jxr_linenumber" name="L144" href="#L144">144</a> 				GeometricalObject object = drawingModel.getObject(selectedIndex);
+<a class="jxr_linenumber" name="L145" href="#L145">145</a> 				<strong class="jxr_keyword">if</strong>(object instanceof <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/objects/Line.html">Line</a>) {
+<a class="jxr_linenumber" name="L146" href="#L146">146</a> 					LineEditDialog dialog = <strong class="jxr_keyword">new</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/dialogs/LineEditDialog.html">LineEditDialog</a>((Line)object);
+<a class="jxr_linenumber" name="L147" href="#L147">147</a> 					<strong class="jxr_keyword">int</strong> result = JOptionPane.showConfirmDialog(JVDraw.<strong class="jxr_keyword">this</strong>, 
+<a class="jxr_linenumber" name="L148" href="#L148">148</a> 							dialog, 
+<a class="jxr_linenumber" name="L149" href="#L149">149</a> 							<span class="jxr_string">"Edit line"</span>, 
+<a class="jxr_linenumber" name="L150" href="#L150">150</a> 							JOptionPane.OK_CANCEL_OPTION, 
+<a class="jxr_linenumber" name="L151" href="#L151">151</a> 							JOptionPane.PLAIN_MESSAGE
+<a class="jxr_linenumber" name="L152" href="#L152">152</a> 							);
+<a class="jxr_linenumber" name="L153" href="#L153">153</a> 					<strong class="jxr_keyword">if</strong>(result == JOptionPane.OK_OPTION) {
+<a class="jxr_linenumber" name="L154" href="#L154">154</a> 						dialog.updateObject();
+<a class="jxr_linenumber" name="L155" href="#L155">155</a> 						canvas.repaint();
+<a class="jxr_linenumber" name="L156" href="#L156">156</a> 						modified = <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="L157" href="#L157">157</a> 					}
+<a class="jxr_linenumber" name="L158" href="#L158">158</a> 				}
+<a class="jxr_linenumber" name="L159" href="#L159">159</a> 				<strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong>(object instanceof <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/objects/FilledCircle.html">FilledCircle</a>) {
+<a class="jxr_linenumber" name="L160" href="#L160">160</a> 					FilledCircleEditDialog dialog = <strong class="jxr_keyword">new</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/dialogs/FilledCircleEditDialog.html">FilledCircleEditDialog</a>((FilledCircle)object);
+<a class="jxr_linenumber" name="L161" href="#L161">161</a> 					<strong class="jxr_keyword">int</strong> result = JOptionPane.showConfirmDialog(JVDraw.<strong class="jxr_keyword">this</strong>, 
+<a class="jxr_linenumber" name="L162" href="#L162">162</a> 							dialog, 
+<a class="jxr_linenumber" name="L163" href="#L163">163</a> 							<span class="jxr_string">"Edit filled circle"</span>, 
+<a class="jxr_linenumber" name="L164" href="#L164">164</a> 							JOptionPane.OK_CANCEL_OPTION, 
+<a class="jxr_linenumber" name="L165" href="#L165">165</a> 							JOptionPane.PLAIN_MESSAGE
+<a class="jxr_linenumber" name="L166" href="#L166">166</a> 							);
+<a class="jxr_linenumber" name="L167" href="#L167">167</a> 					<strong class="jxr_keyword">if</strong>(result == JOptionPane.OK_OPTION) {
+<a class="jxr_linenumber" name="L168" href="#L168">168</a> 						dialog.updateObject();
+<a class="jxr_linenumber" name="L169" href="#L169">169</a> 						canvas.repaint();
+<a class="jxr_linenumber" name="L170" href="#L170">170</a> 						modified = <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="L171" href="#L171">171</a> 					}
+<a class="jxr_linenumber" name="L172" href="#L172">172</a> 				}
+<a class="jxr_linenumber" name="L173" href="#L173">173</a> 				<strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong>(object instanceof <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/objects/Circle.html">Circle</a>) {
+<a class="jxr_linenumber" name="L174" href="#L174">174</a> 					CircleEditDialog dialog = <strong class="jxr_keyword">new</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/dialogs/CircleEditDialog.html">CircleEditDialog</a>((Circle)object);
+<a class="jxr_linenumber" name="L175" href="#L175">175</a> 					<strong class="jxr_keyword">int</strong> result = JOptionPane.showConfirmDialog(JVDraw.<strong class="jxr_keyword">this</strong>, 
+<a class="jxr_linenumber" name="L176" href="#L176">176</a> 							dialog, 
+<a class="jxr_linenumber" name="L177" href="#L177">177</a> 							<span class="jxr_string">"Edit circle"</span>, 
+<a class="jxr_linenumber" name="L178" href="#L178">178</a> 							JOptionPane.OK_CANCEL_OPTION, 
+<a class="jxr_linenumber" name="L179" href="#L179">179</a> 							JOptionPane.PLAIN_MESSAGE
+<a class="jxr_linenumber" name="L180" href="#L180">180</a> 							);
+<a class="jxr_linenumber" name="L181" href="#L181">181</a> 					<strong class="jxr_keyword">if</strong>(result == JOptionPane.OK_OPTION) {
+<a class="jxr_linenumber" name="L182" href="#L182">182</a> 						dialog.updateObject();
+<a class="jxr_linenumber" name="L183" href="#L183">183</a> 						canvas.repaint();
+<a class="jxr_linenumber" name="L184" href="#L184">184</a> 						modified = <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="L185" href="#L185">185</a> 					}
+<a class="jxr_linenumber" name="L186" href="#L186">186</a> 				}
+<a class="jxr_linenumber" name="L187" href="#L187">187</a> 				
+<a class="jxr_linenumber" name="L188" href="#L188">188</a> 			}
+<a class="jxr_linenumber" name="L189" href="#L189">189</a> 		});
+<a class="jxr_linenumber" name="L190" href="#L190">190</a> 		createActions();
+<a class="jxr_linenumber" name="L191" href="#L191">191</a>         createMenus();
+<a class="jxr_linenumber" name="L192" href="#L192">192</a>         createToolBar();
+<a class="jxr_linenumber" name="L193" href="#L193">193</a>         
+<a class="jxr_linenumber" name="L194" href="#L194">194</a>         canvas = <strong class="jxr_keyword">new</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/JDrawingCanvas.html">JDrawingCanvas</a>(JVDraw.<strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="L195" href="#L195">195</a> 		canvas.setBorder(BorderFactory.createLoweredBevelBorder());
+<a class="jxr_linenumber" name="L196" href="#L196">196</a> 		drawingModel.addDrawingModelListener(canvas);
+<a class="jxr_linenumber" name="L197" href="#L197">197</a> 		
+<a class="jxr_linenumber" name="L198" href="#L198">198</a> 		getContentPane().add(canvas, BorderLayout.CENTER);
+<a class="jxr_linenumber" name="L199" href="#L199">199</a> 		getContentPane().add(listOfObjects, BorderLayout.EAST);
+<a class="jxr_linenumber" name="L200" href="#L200">200</a> 		
+<a class="jxr_linenumber" name="L201" href="#L201">201</a> 	}
+<a class="jxr_linenumber" name="L202" href="#L202">202</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L203" href="#L203">203</a> <em class="jxr_javadoccomment">	 * Creates actions supported by this program</em>
+<a class="jxr_linenumber" name="L204" href="#L204">204</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L205" href="#L205">205</a> 	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> createActions() {
+<a class="jxr_linenumber" name="L206" href="#L206">206</a> 
+<a class="jxr_linenumber" name="L207" href="#L207">207</a> 		openDocument = <strong class="jxr_keyword">new</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/actions/OpenAction.html">OpenAction</a>(<strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="L208" href="#L208">208</a> 		modifyAction(openDocument, <span class="jxr_string">"Open"</span>, <span class="jxr_string">"control O"</span>, 
+<a class="jxr_linenumber" name="L209" href="#L209">209</a> 				KeyEvent.VK_O, <span class="jxr_string">"Used to open existing picture from disk."</span>, 
+<a class="jxr_linenumber" name="L210" href="#L210">210</a> 				<strong class="jxr_keyword">new</strong> ImageIcon(<span class="jxr_string">"icons/open.png"</span>), <strong class="jxr_keyword">new</strong> ImageIcon());
+<a class="jxr_linenumber" name="L211" href="#L211">211</a> 		
+<a class="jxr_linenumber" name="L212" href="#L212">212</a> 		saveDocument = <strong class="jxr_keyword">new</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/actions/SaveAction.html">SaveAction</a>(<strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="L213" href="#L213">213</a> 		modifyAction(saveDocument, <span class="jxr_string">"Save"</span>, <span class="jxr_string">"control S"</span>, 
+<a class="jxr_linenumber" name="L214" href="#L214">214</a> 				KeyEvent.VK_S, <span class="jxr_string">"Saves this picture."</span>,
+<a class="jxr_linenumber" name="L215" href="#L215">215</a> 				<strong class="jxr_keyword">new</strong> ImageIcon(<span class="jxr_string">"icons/save.png"</span>), <strong class="jxr_keyword">new</strong> ImageIcon());
+<a class="jxr_linenumber" name="L216" href="#L216">216</a> 
+<a class="jxr_linenumber" name="L217" href="#L217">217</a> 		saveAsDocument = <strong class="jxr_keyword">new</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/actions/SaveAsAction.html">SaveAsAction</a>(<strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="L218" href="#L218">218</a> 		modifyAction(saveAsDocument, <span class="jxr_string">"Save As"</span>, <span class="jxr_string">""</span>, 
+<a class="jxr_linenumber" name="L219" href="#L219">219</a> 				-1, <span class="jxr_string">"Saves this picture as..."</span>, 
+<a class="jxr_linenumber" name="L220" href="#L220">220</a> 				<strong class="jxr_keyword">new</strong> ImageIcon(<span class="jxr_string">"icons/saveAs.png"</span>), <strong class="jxr_keyword">new</strong> ImageIcon());
+<a class="jxr_linenumber" name="L221" href="#L221">221</a> 		
+<a class="jxr_linenumber" name="L222" href="#L222">222</a> 		exitProgram = <strong class="jxr_keyword">new</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/actions/ExitAction.html">ExitAction</a>(<strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="L223" href="#L223">223</a> 		modifyAction(exitProgram, <span class="jxr_string">"Exit"</span>, <span class="jxr_string">"control W"</span>, 
+<a class="jxr_linenumber" name="L224" href="#L224">224</a> 				KeyEvent.VK_E, <span class="jxr_string">"Exit program"</span>, 
+<a class="jxr_linenumber" name="L225" href="#L225">225</a> 				<strong class="jxr_keyword">new</strong> ImageIcon(<span class="jxr_string">"icons/exit.png"</span>), <strong class="jxr_keyword">new</strong> ImageIcon());
+<a class="jxr_linenumber" name="L226" href="#L226">226</a> 		
+<a class="jxr_linenumber" name="L227" href="#L227">227</a> 		drawLine = <strong class="jxr_keyword">new</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/actions/DrawLineAction.html">DrawLineAction</a>();
+<a class="jxr_linenumber" name="L228" href="#L228">228</a> 		modifyAction(drawLine, <span class="jxr_string">""</span>, <span class="jxr_string">""</span>, 
+<a class="jxr_linenumber" name="L229" href="#L229">229</a> 				KeyEvent.VK_L, <span class="jxr_string">"Draws a line"</span>, 
+<a class="jxr_linenumber" name="L230" href="#L230">230</a> 				<strong class="jxr_keyword">new</strong> ImageIcon(<span class="jxr_string">"icons/line.png"</span>), <strong class="jxr_keyword">new</strong> ImageIcon(<span class="jxr_string">"icons/line.png"</span>));
+<a class="jxr_linenumber" name="L231" href="#L231">231</a> 	
+<a class="jxr_linenumber" name="L232" href="#L232">232</a> 		drawCircle = <strong class="jxr_keyword">new</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/actions/DrawCircleAction.html">DrawCircleAction</a>();
+<a class="jxr_linenumber" name="L233" href="#L233">233</a> 		modifyAction(drawCircle, <span class="jxr_string">""</span>, <span class="jxr_string">""</span>, 
+<a class="jxr_linenumber" name="L234" href="#L234">234</a> 				KeyEvent.VK_C, <span class="jxr_string">"Draws a unfilled circle."</span>, 
+<a class="jxr_linenumber" name="L235" href="#L235">235</a> 				<strong class="jxr_keyword">new</strong> ImageIcon(<span class="jxr_string">"icons/circle.png"</span>), <strong class="jxr_keyword">new</strong> ImageIcon(<span class="jxr_string">"icons/circle.png"</span>));
+<a class="jxr_linenumber" name="L236" href="#L236">236</a> 		
+<a class="jxr_linenumber" name="L237" href="#L237">237</a> 		drawFCircle = <strong class="jxr_keyword">new</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/actions/DrawFCircleAction.html">DrawFCircleAction</a>();
+<a class="jxr_linenumber" name="L238" href="#L238">238</a> 		modifyAction(drawFCircle, <span class="jxr_string">""</span>, <span class="jxr_string">""</span>, 
+<a class="jxr_linenumber" name="L239" href="#L239">239</a> 				KeyEvent.VK_F, <span class="jxr_string">"Draws a filled circle."</span>, 
+<a class="jxr_linenumber" name="L240" href="#L240">240</a> 				<strong class="jxr_keyword">new</strong> ImageIcon(<span class="jxr_string">"icons/fcircle.png"</span>), <strong class="jxr_keyword">new</strong> ImageIcon(<span class="jxr_string">"icons/fcircle.png"</span>));
+<a class="jxr_linenumber" name="L241" href="#L241">241</a> 		
+<a class="jxr_linenumber" name="L242" href="#L242">242</a> 		export = <strong class="jxr_keyword">new</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/actions/ExportAction.html">ExportAction</a>(<strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="L243" href="#L243">243</a> 		modifyAction(export, <span class="jxr_string">"Export"</span>, <span class="jxr_string">""</span>, 
+<a class="jxr_linenumber" name="L244" href="#L244">244</a> 				-1, <span class="jxr_string">"Exports image"</span>, 
+<a class="jxr_linenumber" name="L245" href="#L245">245</a> 				<strong class="jxr_keyword">new</strong> ImageIcon(<span class="jxr_string">"icons/export.png"</span>), <strong class="jxr_keyword">new</strong> ImageIcon());
+<a class="jxr_linenumber" name="L246" href="#L246">246</a> 	}
+<a class="jxr_linenumber" name="L247" href="#L247">247</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L248" href="#L248">248</a> <em class="jxr_javadoccomment">	 * Modifies actions so they are user friendly.</em>
+<a class="jxr_linenumber" name="L249" href="#L249">249</a> <em class="jxr_javadoccomment">	 * @param action what action does</em>
+<a class="jxr_linenumber" name="L250" href="#L250">250</a> <em class="jxr_javadoccomment">	 * @param name name of action</em>
+<a class="jxr_linenumber" name="L251" href="#L251">251</a> <em class="jxr_javadoccomment">	 * @param accelerator accelerator key</em>
+<a class="jxr_linenumber" name="L252" href="#L252">252</a> <em class="jxr_javadoccomment">	 * @param mnemonic mnemonic key</em>
+<a class="jxr_linenumber" name="L253" href="#L253">253</a> <em class="jxr_javadoccomment">	 * @param description short description </em>
+<a class="jxr_linenumber" name="L254" href="#L254">254</a> <em class="jxr_javadoccomment">	 * @param smallIcon small icon for action in menu</em>
+<a class="jxr_linenumber" name="L255" href="#L255">255</a> <em class="jxr_javadoccomment">	 * @param largeIcon large icon for action in toolbar</em>
+<a class="jxr_linenumber" name="L256" href="#L256">256</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L257" href="#L257">257</a> 	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> modifyAction(AbstractAction action, String name,
+<a class="jxr_linenumber" name="L258" href="#L258">258</a> 			String accelerator, <strong class="jxr_keyword">int</strong> mnemonic, String description, ImageIcon smallIcon, 
+<a class="jxr_linenumber" name="L259" href="#L259">259</a> 			ImageIcon largeIcon) {
+<a class="jxr_linenumber" name="L260" href="#L260">260</a> 		
+<a class="jxr_linenumber" name="L261" href="#L261">261</a> 		<strong class="jxr_keyword">if</strong>(name.isEmpty()) {
+<a class="jxr_linenumber" name="L262" href="#L262">262</a> 			action.putValue(Action.LARGE_ICON_KEY, largeIcon);
+<a class="jxr_linenumber" name="L263" href="#L263">263</a> 		}
+<a class="jxr_linenumber" name="L264" href="#L264">264</a> 		<strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L265" href="#L265">265</a> 			action.putValue(Action.NAME, name);
+<a class="jxr_linenumber" name="L266" href="#L266">266</a> 		}
+<a class="jxr_linenumber" name="L267" href="#L267">267</a> 		
+<a class="jxr_linenumber" name="L268" href="#L268">268</a> 		<strong class="jxr_keyword">if</strong>(!accelerator.isEmpty()) {
+<a class="jxr_linenumber" name="L269" href="#L269">269</a> 			action.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(accelerator));
+<a class="jxr_linenumber" name="L270" href="#L270">270</a> 		}
+<a class="jxr_linenumber" name="L271" href="#L271">271</a> 		<strong class="jxr_keyword">if</strong>(mnemonic != -1) {
+<a class="jxr_linenumber" name="L272" href="#L272">272</a> 			action.putValue(Action.MNEMONIC_KEY, mnemonic);
+<a class="jxr_linenumber" name="L273" href="#L273">273</a> 		}
+<a class="jxr_linenumber" name="L274" href="#L274">274</a> 		action.putValue(Action.SHORT_DESCRIPTION, description);
+<a class="jxr_linenumber" name="L275" href="#L275">275</a> 		action.putValue(Action.SMALL_ICON, smallIcon);
+<a class="jxr_linenumber" name="L276" href="#L276">276</a> 		
+<a class="jxr_linenumber" name="L277" href="#L277">277</a> 	}
+<a class="jxr_linenumber" name="L278" href="#L278">278</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L279" href="#L279">279</a> <em class="jxr_javadoccomment">	 * Creates and initializes toolbar of this program.</em>
+<a class="jxr_linenumber" name="L280" href="#L280">280</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L281" href="#L281">281</a> 	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> createToolBar() {
+<a class="jxr_linenumber" name="L282" href="#L282">282</a> 		
+<a class="jxr_linenumber" name="L283" href="#L283">283</a> 		JToolBar toolBar = <strong class="jxr_keyword">new</strong> JToolBar(<span class="jxr_string">"Tools"</span>);
+<a class="jxr_linenumber" name="L284" href="#L284">284</a> 		toolBar.setFloatable(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L285" href="#L285">285</a> 		
+<a class="jxr_linenumber" name="L286" href="#L286">286</a> 		<em class="jxr_comment">//add 2 color area</em>
+<a class="jxr_linenumber" name="L287" href="#L287">287</a> 		foreground = <strong class="jxr_keyword">new</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/colorarea/JColorArea.html">JColorArea</a>(Color.RED); 
+<a class="jxr_linenumber" name="L288" href="#L288">288</a> 		background = <strong class="jxr_keyword">new</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/colorarea/JColorArea.html">JColorArea</a>(Color.BLUE);
+<a class="jxr_linenumber" name="L289" href="#L289">289</a> 		foreground.setToolTipText(<span class="jxr_string">"Select foreground color."</span>);
+<a class="jxr_linenumber" name="L290" href="#L290">290</a> 		background.setToolTipText(<span class="jxr_string">"Select background color."</span>);
+<a class="jxr_linenumber" name="L291" href="#L291">291</a> 		toolBar.add(foreground);
+<a class="jxr_linenumber" name="L292" href="#L292">292</a> 		toolBar.add(background);
+<a class="jxr_linenumber" name="L293" href="#L293">293</a> 		
+<a class="jxr_linenumber" name="L294" href="#L294">294</a> 		toolBar.addSeparator();
+<a class="jxr_linenumber" name="L295" href="#L295">295</a> 		
+<a class="jxr_linenumber" name="L296" href="#L296">296</a> 		addToolBarButtons(toolBar);
+<a class="jxr_linenumber" name="L297" href="#L297">297</a> 		
+<a class="jxr_linenumber" name="L298" href="#L298">298</a> 		StatusLabel stats = <strong class="jxr_keyword">new</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/StatusLabel.html">StatusLabel</a>(background, foreground);
+<a class="jxr_linenumber" name="L299" href="#L299">299</a> 		foreground.addColorChangeListener(stats);
+<a class="jxr_linenumber" name="L300" href="#L300">300</a> 		background.addColorChangeListener(stats);
+<a class="jxr_linenumber" name="L301" href="#L301">301</a> 		getContentPane().add(stats, BorderLayout.SOUTH);
+<a class="jxr_linenumber" name="L302" href="#L302">302</a> 		
+<a class="jxr_linenumber" name="L303" href="#L303">303</a> 		getContentPane().add(toolBar, BorderLayout.NORTH);
+<a class="jxr_linenumber" name="L304" href="#L304">304</a> 	}
+<a class="jxr_linenumber" name="L305" href="#L305">305</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L306" href="#L306">306</a> <em class="jxr_javadoccomment">	 * Adds toolbar buttons with actions.</em>
+<a class="jxr_linenumber" name="L307" href="#L307">307</a> <em class="jxr_javadoccomment">	 * @param toolBar toolbar of this program.</em>
+<a class="jxr_linenumber" name="L308" href="#L308">308</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L309" href="#L309">309</a> 	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> addToolBarButtons(JToolBar toolBar) {
+<a class="jxr_linenumber" name="L310" href="#L310">310</a> 
+<a class="jxr_linenumber" name="L311" href="#L311">311</a> 		JToggleButton lineButton = <strong class="jxr_keyword">new</strong> JToggleButton(drawLine);
+<a class="jxr_linenumber" name="L312" href="#L312">312</a> 		JToggleButton circleButton = <strong class="jxr_keyword">new</strong> JToggleButton(drawCircle);
+<a class="jxr_linenumber" name="L313" href="#L313">313</a> 		JToggleButton fcircleButton = <strong class="jxr_keyword">new</strong> JToggleButton(drawFCircle);
+<a class="jxr_linenumber" name="L314" href="#L314">314</a> 
+<a class="jxr_linenumber" name="L315" href="#L315">315</a> 		lineButton.setActionCommand(<span class="jxr_string">"LINE"</span>);
+<a class="jxr_linenumber" name="L316" href="#L316">316</a> 		circleButton.setActionCommand(<span class="jxr_string">"CIRCLE"</span>);
+<a class="jxr_linenumber" name="L317" href="#L317">317</a> 		fcircleButton.setActionCommand(<span class="jxr_string">"FCIRCLE"</span>);
+<a class="jxr_linenumber" name="L318" href="#L318">318</a> 		
+<a class="jxr_linenumber" name="L319" href="#L319">319</a> 		drawButtons.add(lineButton);
+<a class="jxr_linenumber" name="L320" href="#L320">320</a> 		drawButtons.add(circleButton);
+<a class="jxr_linenumber" name="L321" href="#L321">321</a> 		drawButtons.add(fcircleButton);
+<a class="jxr_linenumber" name="L322" href="#L322">322</a> 		
+<a class="jxr_linenumber" name="L323" href="#L323">323</a> 		drawButtons.setSelected(lineButton.getModel(), <strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L324" href="#L324">324</a> 		
+<a class="jxr_linenumber" name="L325" href="#L325">325</a> 		toolBar.add(lineButton);
+<a class="jxr_linenumber" name="L326" href="#L326">326</a> 		toolBar.add(circleButton);
+<a class="jxr_linenumber" name="L327" href="#L327">327</a> 		toolBar.add(fcircleButton);
+<a class="jxr_linenumber" name="L328" href="#L328">328</a> 	}
+<a class="jxr_linenumber" name="L329" href="#L329">329</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L330" href="#L330">330</a> <em class="jxr_javadoccomment">	 * Creates menus for this program.</em>
+<a class="jxr_linenumber" name="L331" href="#L331">331</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L332" href="#L332">332</a> 	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> createMenus() {
+<a class="jxr_linenumber" name="L333" href="#L333">333</a> 		
+<a class="jxr_linenumber" name="L334" href="#L334">334</a> 		JMenuBar menuBar = <strong class="jxr_keyword">new</strong> JMenuBar();
+<a class="jxr_linenumber" name="L335" href="#L335">335</a> 		JMenu fileMenu = <strong class="jxr_keyword">new</strong> JMenu(<span class="jxr_string">"File"</span>);
+<a class="jxr_linenumber" name="L336" href="#L336">336</a> 
+<a class="jxr_linenumber" name="L337" href="#L337">337</a> 		fileMenu.add(openDocument);
+<a class="jxr_linenumber" name="L338" href="#L338">338</a> 		fileMenu.add(saveDocument);
+<a class="jxr_linenumber" name="L339" href="#L339">339</a> 		fileMenu.add(saveAsDocument);
+<a class="jxr_linenumber" name="L340" href="#L340">340</a> 		fileMenu.add(export);
+<a class="jxr_linenumber" name="L341" href="#L341">341</a> 		fileMenu.add(exitProgram);
+<a class="jxr_linenumber" name="L342" href="#L342">342</a> 
+<a class="jxr_linenumber" name="L343" href="#L343">343</a> 		menuBar.add(fileMenu);
+<a class="jxr_linenumber" name="L344" href="#L344">344</a> 		setJMenuBar(menuBar);
+<a class="jxr_linenumber" name="L345" href="#L345">345</a> 	}
+<a class="jxr_linenumber" name="L346" href="#L346">346</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L347" href="#L347">347</a> <em class="jxr_javadoccomment">	 * Returns this programs draw button group</em>
+<a class="jxr_linenumber" name="L348" href="#L348">348</a> <em class="jxr_javadoccomment">	 * @return this programs draw button group</em>
+<a class="jxr_linenumber" name="L349" href="#L349">349</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L350" href="#L350">350</a> 	<strong class="jxr_keyword">public</strong> ButtonGroup getDrawButtons() {
+<a class="jxr_linenumber" name="L351" href="#L351">351</a> 		<strong class="jxr_keyword">return</strong> drawButtons;
+<a class="jxr_linenumber" name="L352" href="#L352">352</a> 	}
+<a class="jxr_linenumber" name="L353" href="#L353">353</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L354" href="#L354">354</a> <em class="jxr_javadoccomment">	 * Returns this programs model for list with objects</em>
+<a class="jxr_linenumber" name="L355" href="#L355">355</a> <em class="jxr_javadoccomment">	 * @return this programs model for list with objects</em>
+<a class="jxr_linenumber" name="L356" href="#L356">356</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L357" href="#L357">357</a> 	<strong class="jxr_keyword">public</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/list/DrawingModel.html">DrawingModel</a> getDrawingModel() {
+<a class="jxr_linenumber" name="L358" href="#L358">358</a> 		<strong class="jxr_keyword">return</strong> drawingModel;
+<a class="jxr_linenumber" name="L359" href="#L359">359</a> 	}
+<a class="jxr_linenumber" name="L360" href="#L360">360</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L361" href="#L361">361</a> <em class="jxr_javadoccomment">	 * Returns this programs object foreground color</em>
+<a class="jxr_linenumber" name="L362" href="#L362">362</a> <em class="jxr_javadoccomment">	 * @return this programs object foreground color</em>
+<a class="jxr_linenumber" name="L363" href="#L363">363</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L364" href="#L364">364</a> 	<strong class="jxr_keyword">public</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/colorarea/JColorArea.html">JColorArea</a> getForeGround() {
+<a class="jxr_linenumber" name="L365" href="#L365">365</a> 		<strong class="jxr_keyword">return</strong> foreground;
+<a class="jxr_linenumber" name="L366" href="#L366">366</a> 	}
+<a class="jxr_linenumber" name="L367" href="#L367">367</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L368" href="#L368">368</a> <em class="jxr_javadoccomment">	 * Returns this programs object background color</em>
+<a class="jxr_linenumber" name="L369" href="#L369">369</a> <em class="jxr_javadoccomment">	 * @return this programs object background color</em>
+<a class="jxr_linenumber" name="L370" href="#L370">370</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L371" href="#L371">371</a> 	<strong class="jxr_keyword">public</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/colorarea/JColorArea.html">JColorArea</a> getBackGround() {
+<a class="jxr_linenumber" name="L372" href="#L372">372</a> 		<strong class="jxr_keyword">return</strong> background;
+<a class="jxr_linenumber" name="L373" href="#L373">373</a> 	}
+<a class="jxr_linenumber" name="L374" href="#L374">374</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L375" href="#L375">375</a> <em class="jxr_javadoccomment">	 * Returns this programs modification flag</em>
+<a class="jxr_linenumber" name="L376" href="#L376">376</a> <em class="jxr_javadoccomment">	 * @return this programs modification flag</em>
+<a class="jxr_linenumber" name="L377" href="#L377">377</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L378" href="#L378">378</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> getModified() {
+<a class="jxr_linenumber" name="L379" href="#L379">379</a> 		<strong class="jxr_keyword">return</strong> modified;
+<a class="jxr_linenumber" name="L380" href="#L380">380</a> 	}
+<a class="jxr_linenumber" name="L381" href="#L381">381</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L382" href="#L382">382</a> <em class="jxr_javadoccomment">	 * Sets this program modification flag.</em>
+<a class="jxr_linenumber" name="L383" href="#L383">383</a> <em class="jxr_javadoccomment">	 * @param modified new state of flag</em>
+<a class="jxr_linenumber" name="L384" href="#L384">384</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L385" href="#L385">385</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setModified(<strong class="jxr_keyword">boolean</strong> modified) {
+<a class="jxr_linenumber" name="L386" href="#L386">386</a> 		<strong class="jxr_keyword">this</strong>.modified = modified;
+<a class="jxr_linenumber" name="L387" href="#L387">387</a> 	}
+<a class="jxr_linenumber" name="L388" href="#L388">388</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L389" href="#L389">389</a> <em class="jxr_javadoccomment">	 * Saves current picture on disk</em>
+<a class="jxr_linenumber" name="L390" href="#L390">390</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L391" href="#L391">391</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> save() {
+<a class="jxr_linenumber" name="L392" href="#L392">392</a> 		saveDocument.actionPerformed(<strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="L393" href="#L393">393</a> 	}
+<a class="jxr_linenumber" name="L394" href="#L394">394</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L395" href="#L395">395</a> <em class="jxr_javadoccomment">	 * Sets path of current picture</em>
+<a class="jxr_linenumber" name="L396" href="#L396">396</a> <em class="jxr_javadoccomment">	 * @param path path of current picture</em>
+<a class="jxr_linenumber" name="L397" href="#L397">397</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L398" href="#L398">398</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setPathToCurrentFile(Path path) {
+<a class="jxr_linenumber" name="L399" href="#L399">399</a> 		pathToCurrentFile = path;
+<a class="jxr_linenumber" name="L400" href="#L400">400</a> 	}
+<a class="jxr_linenumber" name="L401" href="#L401">401</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L402" href="#L402">402</a> <em class="jxr_javadoccomment">	 * Returns current picture path on disk</em>
+<a class="jxr_linenumber" name="L403" href="#L403">403</a> <em class="jxr_javadoccomment">	 * @return current picture path on disk</em>
+<a class="jxr_linenumber" name="L404" href="#L404">404</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L405" href="#L405">405</a> 	<strong class="jxr_keyword">public</strong> Path getPathToCurrentFile() {
+<a class="jxr_linenumber" name="L406" href="#L406">406</a> 		<strong class="jxr_keyword">return</strong> pathToCurrentFile;
+<a class="jxr_linenumber" name="L407" href="#L407">407</a> 	}
+<a class="jxr_linenumber" name="L408" href="#L408">408</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L409" href="#L409">409</a> <em class="jxr_javadoccomment">	 * Sets up the program</em>
+<a class="jxr_linenumber" name="L410" href="#L410">410</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L411" href="#L411">411</a> 	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> appSetUp() {
+<a class="jxr_linenumber" name="L412" href="#L412">412</a> 		
+<a class="jxr_linenumber" name="L413" href="#L413">413</a> 		<strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L414" href="#L414">414</a> 			
+<a class="jxr_linenumber" name="L415" href="#L415">415</a>             UIManager.setLookAndFeel(<span class="jxr_string">"com.sun.java.swing.plaf.windows.WindowsLookAndFeel"</span>);
+<a class="jxr_linenumber" name="L416" href="#L416">416</a>             
+<a class="jxr_linenumber" name="L417" href="#L417">417</a>         } <strong class="jxr_keyword">catch</strong> (Exception ignorable) {
+<a class="jxr_linenumber" name="L418" href="#L418">418</a>         }
+<a class="jxr_linenumber" name="L419" href="#L419">419</a> 		JFrame jvdraw = <strong class="jxr_keyword">new</strong> <a href="../../../../../../hr/fer/zemris/java/hw12/jvdraw/JVDraw.html">JVDraw</a>();
+<a class="jxr_linenumber" name="L420" href="#L420">420</a> 		jvdraw.setVisible(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L421" href="#L421">421</a> 	}
+<a class="jxr_linenumber" name="L422" href="#L422">422</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L423" href="#L423">423</a> <em class="jxr_javadoccomment">	 * Method called on program start.</em>
+<a class="jxr_linenumber" name="L424" href="#L424">424</a> <em class="jxr_javadoccomment">	 * @param args command line arguments, not used in this program</em>
+<a class="jxr_linenumber" name="L425" href="#L425">425</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L426" href="#L426">426</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> main(String[] args) {
+<a class="jxr_linenumber" name="L427" href="#L427">427</a> 		SwingUtilities.invokeLater( () -&gt; {
+<a class="jxr_linenumber" name="L428" href="#L428">428</a> 			appSetUp();
+<a class="jxr_linenumber" name="L429" href="#L429">429</a> 		});
+<a class="jxr_linenumber" name="L430" href="#L430">430</a> 	}
+<a class="jxr_linenumber" name="L431" href="#L431">431</a> 
+<a class="jxr_linenumber" name="L432" href="#L432">432</a> }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2015 <a href="http://www.fer.unizg.hr">ZEMRIS, Fakultet elektrotehnike i računarstva, Sveučilište u Zagrebu</a>. All rights reserved.</div>
+</body>
+</html>
